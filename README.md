@@ -8,6 +8,8 @@ A small offline-first project workspace built with plain HTML, CSS and JavaScrip
 - Edit and delete projects, tasks and notes without creating duplicates
 - Set Planned, In progress or Completed status on every entry
 - Change an entry's status directly from its workspace card
+- View tasks in a three-column Kanban board (Planned, In progress, Completed)
+- Move tasks between Kanban columns with an accessible status selector
 - Keep the same IndexedDB database version, object stores and key paths
 - Automatic project progress from linked tasks
 - Search and type/status filters
@@ -48,4 +50,4 @@ This version exports `schemaVersion: 2` with separate `projects`, `tasks`, and `
 ## Update notes
 - This update keeps `BuildBoardDB`, IndexedDB version `1`, and the existing `projects`, `tasks`, and `notes` stores unchanged.
 - Existing V2 records with `open`/`done` task statuses remain readable and display as Planned/Completed.
-- The current service-worker cache name is `buildboard-shell-20261115-quick-status`. Change this name whenever cached app files are updated so browsers request the refreshed app shell.
+- The current service-worker cache name is `buildboard-shell-20261115-kanban`. Change this name whenever cached app files are updated so browsers request the refreshed app shell.
