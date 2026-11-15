@@ -258,13 +258,39 @@
         main.appendChild(bar);
       }
       const actions = safeText("div", "", "entry-actions");
+      const quickStatus = document.createElement("select");
+      quickStatus.className = "quick-status";
+      quickStatus.setAttribute("aria-label", `Change status for ${item.title}`);
+      for (const [value, label] of [
+        ["planned", "Planned"],
+        ["in-progress", "In progress"],
+        ["completed", "Completed"]
+      ]) {
+        const option = new Option(label, value);
+        quickStatus.add(option);
+      }
+      quickStatus.value = currentStatus;
+      quickStatus.addEventListener("change", async () => {
+        quickStatus.disabled = true;
+        try {
+          const storeName = item.type === "project" ? "projects" :
+            item.type === "task" ? "tasks" : "notes";
+          await updateRecord(storeName, { ...item, status: quickStatus.value });
+          await render();
+          showMessage(`Status changed to ${statusLabel(quickStatus.value)}.`);
+        } catch (error) {
+          console.error(error);
+          showMessage(error.message || "Could not update status.", true);
+          quickStatus.disabled = false;
+        }
+      });
       const edit = safeText("button", "Edit", "small-button");
       edit.type = "button";
       edit.addEventListener("click", () => beginEdit(item));
       const del = safeText("button", "Delete", "small-button delete-button");
       del.type = "button";
       del.addEventListener("click", () => deleteRecord(item.type, item));
-      actions.append(edit, del);
+      actions.append(quickStatus, edit, del);
       card.append(main, actions);
       entriesEl.appendChild(card);
     }
