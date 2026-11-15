@@ -34,3 +34,24 @@ button:hover{filter:brightness(1.12);transform:translateY(-1px)}button:focus-vis
 .quick-status{width:auto;max-width:135px;padding:8px 9px;font-size:12px;border-radius:8px;background:#10243a;border:1px solid #385575;color:#dbeafe}
 .quick-status:disabled{opacity:.65;cursor:wait}
 @media(max-width:420px){.entry-actions{flex-wrap:wrap}.quick-status{max-width:none;flex:1}}
+
+/* Kanban board */
+.kanban-section{margin:42px 0}
+.kanban-section .workspace-heading{margin-bottom:8px}
+.board-hint{margin:0 0 15px;color:var(--muted);font-size:13px}
+.kanban-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.kanban-column{min-width:0;padding:13px;border:1px solid var(--line);border-radius:14px;background:#0e1929}
+.kanban-column-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 2px 12px}
+.kanban-column-heading h3{margin:0;font-size:14px}
+.kanban-count{display:grid;place-items:center;min-width:25px;height:25px;padding:0 7px;border-radius:20px;background:#203751;color:#bfdbfe;font-size:11px;font-weight:750}
+.kanban-list{display:grid;gap:9px;min-height:72px}
+.kanban-card{min-width:0;padding:12px;border:1px solid #2b405a;border-radius:11px;background:linear-gradient(145deg,#182a41,#122033);box-shadow:0 5px 16px #00000014}
+.kanban-card h4{margin:0 0 6px;font-size:13px;overflow-wrap:anywhere}
+.kanban-card p{margin:0;color:var(--muted);font-size:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+.kanban-project{display:block;margin-top:8px;color:#93c5fd;font-size:10px;overflow-wrap:anywhere}
+.kanban-card-controls{margin-top:11px}
+.kanban-move-label{display:grid;gap:5px;color:#9aabc0;font-size:10px;font-weight:650}
+.kanban-status{padding:8px 9px;font-size:11px}
+.kanban-status:disabled{opacity:.65;cursor:wait}
+.kanban-empty{margin:0;padding:17px 8px;border:1px dashed #2b405a;border-radius:9px;color:#8296ae;text-align:center;font-size:11px}
+@media(max-width:650px){.kanban-board{grid-template-columns:1fr}.kanban-column{padding:12px}.kanban-list{min-height:48px}}
