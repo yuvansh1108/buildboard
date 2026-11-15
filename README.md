@@ -48,4 +48,4 @@ This version exports `schemaVersion: 2` with separate `projects`, `tasks`, and `
 ## Update notes
 - This update keeps `BuildBoardDB`, IndexedDB version `1`, and the existing `projects`, `tasks`, and `notes` stores unchanged.
 - Existing V2 records with `open`/`done` task statuses remain readable and display as Planned/Completed.
-- The service-worker cache name is `buildboard-shell-20261115-0850` so browsers request the refreshed app shell.
+- The current service-worker cache name is `buildboard-shell-20261115-quick-status`. Change this name whenever cached app files are updated so browsers request the refreshed app shell.
