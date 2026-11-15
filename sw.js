@@ -1,4 +1,4 @@
-const CACHE_NAME = "buildboard-shell-20261115-0850";
+const CACHE_NAME = "buildboard-shell-20261115-quick-status";
 const APP_FILES = [
   "./",
   "./index.html",
