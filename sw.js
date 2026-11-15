@@ -1,4 +1,4 @@
-const CACHE_NAME = "buildboard-shell-20261115-quick-status";
+const CACHE_NAME = "buildboard-shell-20261115-kanban";
 const APP_FILES = [
   "./",
   "./index.html",
