@@ -1,0 +1,10 @@
+{
+  "name": "BuildBoard",
+  "short_name": "BuildBoard",
+  "description": "An offline-first personal project workspace.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#101827"
+}
