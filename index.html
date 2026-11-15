@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="BuildBoard — your offline-first project workspace.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+  <title>BuildBoard</title>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="BuildBoard home"><span class="brand-mark">B</span> BuildBoard</a>
+    <span class="local-status"><span class="status-dot"></span> Stored on this device</span>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+      <h1>Make ideas happen.</h1>
+      <p>Projects, tasks and notes — organized in one place, even offline.</p>
+    </section>
+    <section class="stats" aria-label="Workspace summary">
+      <article class="stat"><span>Projects</span><strong id="projectCount">0</strong></article>
+      <article class="stat"><span>Open tasks</span><strong id="openTaskCount">0</strong></article>
+      <article class="stat"><span>Completed entries</span><strong id="doneTaskCount">0</strong></article>
+    </section>
+    <section class="panel editor">
+      <div class="panel-heading">
+        <div><p class="eyebrow">WORKSPACE EDITOR</p><h2 id="formHeading">Add to your workspace</h2></div>
+        <button id="cancelEdit" class="text-button hidden" type="button">Cancel edit</button>
+      </div>
+      <form id="entryForm">
+        <div class="field-row">
+          <label>Type
+            <select id="type">
+              <option value="project">Project</option>
+              <option value="task">Task</option>
+              <option value="note">Note</option>
+            </select>
+          </label>
+          <label id="projectField" class="hidden">Related project
+            <select id="projectId"><option value="">No project</option></select>
+          </label>
+        </div>
+        <label>Title
+          <input id="title" maxlength="120" required placeholder="e.g. Build my portfolio">
+        </label>
+        <label>Description
+          <textarea id="description" rows="3" maxlength="3000" placeholder="Add useful details..."></textarea>
+        </label>
+        <label id="taskStatusField">Status
+          <select id="taskStatus">
+            <option value="planned">Planned</option>
+            <option value="in-progress">In progress</option>
+            <option value="completed">Completed</option>
+          </select>
+        </label>
+        <button class="primary-button" id="saveButton" type="submit">＋ Add item</button>
+      </form>
+    </section>
+    <section class="workspace">
+      <div class="workspace-heading">
+        <div><p class="eyebrow">YOUR COLLECTION</p><h2>Workspace</h2></div>
+        <span class="muted" id="itemCount">0 items</span>
+      </div>
+      <div class="filters">
+        <input id="search" type="search" placeholder="Search your workspace..." aria-label="Search workspace">
+        <select id="filterType" aria-label="Filter by type">
+          <option value="all">All types</option><option value="project">Projects</option>
+          <option value="task">Tasks</option><option value="note">Notes</option>
+        </select>
+        <select id="filterStatus" aria-label="Filter by status">
+          <option value="all">All statuses</option>
+          <option value="planned">Planned</option>
+          <option value="in-progress">In progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <div id="entries" class="entries"><p class="empty-state">Your workspace is ready. Add your first project!</p></div>
+    </section>
+    <section class="panel backup">
+      <div><p class="eyebrow">YOUR DATA</p><h2>Backups & portability</h2>
+        <p class="muted">Your workspace stays in this browser. Export a JSON backup before clearing browser data or changing devices.</p></div>
+      <div class="backup-actions">
+        <button id="exportButton" class="secondary-button" type="button">↓ Export backup</button>
+        <button id="importButton" class="secondary-button" type="button">↑ Import backup</button>
+        <input id="importFile" type="file" accept=".json,application/json" hidden>
+      </div>
+    </section>
+    <p id="message" class="message" role="status" aria-live="polite"></p>
+  </main>
+  <footer>BuildBoard · Offline-first by design</footer>
+  <script src="./app.js" defer></script>
+</body>
+</html>
