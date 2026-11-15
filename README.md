@@ -7,6 +7,7 @@ A small offline-first project workspace built with plain HTML, CSS and JavaScrip
 - Link tasks and notes to projects
 - Edit and delete projects, tasks and notes without creating duplicates
 - Set Planned, In progress or Completed status on every entry
+- Change an entry's status directly from its workspace card
 - Keep the same IndexedDB database version, object stores and key paths
 - Automatic project progress from linked tasks
 - Search and type/status filters
