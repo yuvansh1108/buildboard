@@ -192,6 +192,66 @@
     await render();
   }
 
+
+  function renderKanban(tasks, projectMap, query, statusFilter) {
+    const board = $("kanbanBoard");
+    const visibleTasks = tasks.filter(task => {
+      const related = task.projectId ? projectMap.get(task.projectId) || "" : "";
+      const matchesText = `${task.title} ${task.description || ""} ${related}`.toLowerCase().includes(query);
+      const matchesStatus = statusFilter === "all" || normalizedStatus(task.status) === statusFilter;
+      return matchesText && matchesStatus;
+    }).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+    $("boardTaskCount").textContent = `${visibleTasks.length} ${visibleTasks.length === 1 ? "task" : "tasks"}`;
+    board.replaceChildren();
+    const columns = [
+      { status: "planned", title: "Planned" },
+      { status: "in-progress", title: "In progress" },
+      { status: "completed", title: "Completed" }
+    ];
+    for (const column of columns) {
+      const columnTasks = visibleTasks.filter(task => normalizedStatus(task.status) === column.status);
+      const section = safeText("section", "", "kanban-column");
+      section.setAttribute("aria-label", `${column.title}: ${columnTasks.length} tasks`);
+      const heading = safeText("div", "", "kanban-column-heading");
+      heading.append(safeText("h3", column.title), safeText("span", String(columnTasks.length), "kanban-count"));
+      const list = safeText("div", "", "kanban-list");
+      if (!columnTasks.length) list.appendChild(safeText("p", "No tasks here yet", "kanban-empty"));
+      for (const task of columnTasks) {
+        const card = safeText("article", "", "kanban-card");
+        card.appendChild(safeText("h4", task.title));
+        if (task.description) card.appendChild(safeText("p", task.description));
+        const related = task.projectId ? projectMap.get(task.projectId) : "";
+        if (related) card.appendChild(safeText("span", `Project: ${related}`, "kanban-project"));
+        const controls = safeText("div", "", "kanban-card-controls");
+        const label = safeText("label", "Move to", "kanban-move-label");
+        const select = document.createElement("select");
+        select.className = "kanban-status";
+        select.setAttribute("aria-label", `Move ${task.title} to another status`);
+        for (const optionData of columns) select.add(new Option(optionData.title, optionData.status));
+        select.value = normalizedStatus(task.status);
+        select.addEventListener("change", async () => {
+          const nextStatus = select.value;
+          select.disabled = true;
+          try {
+            await updateRecord("tasks", { ...task, status: nextStatus });
+            await render();
+            showMessage(`"${task.title}" moved to ${statusLabel(nextStatus)}.`);
+          } catch (error) {
+            console.error(error);
+            showMessage(error.message || "Could not move this task.", true);
+            select.disabled = false;
+          }
+        });
+        label.appendChild(select);
+        controls.appendChild(label);
+        card.appendChild(controls);
+        list.appendChild(card);
+      }
+      section.append(heading, list);
+      board.appendChild(section);
+    }
+  }
+
   async function render() {
     const [projects, tasks, notes] = await Promise.all([
       getAll("projects"), getAll("tasks"), getAll("notes")
@@ -212,6 +272,7 @@
     const query = $("search").value.trim().toLowerCase();
     const typeFilter = $("filterType").value;
     const statusFilter = $("filterStatus").value;
+    renderKanban(tasks, projectMap, query, statusFilter);
     const filtered = all.filter(item => {
       const matchesText = `${item.title} ${item.description || ""} ${projectMap.get(item.projectId) || ""}`.toLowerCase().includes(query);
       const matchesType = typeFilter === "all" || item.type === typeFilter;
